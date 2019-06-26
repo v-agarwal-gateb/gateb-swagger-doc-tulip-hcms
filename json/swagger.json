@@ -396,7 +396,7 @@
             "type" : "integer"
           },
           "name" : {
-            "description" : "The internal name of the Fund Company Asset.",
+            "description" : "[Tulip]The internal name of the Fund Company Asset.",
             "type" : "string"
           },
           "language" : {
