@@ -25,7 +25,7 @@
           "required" : true,
           "schema" : {
             "type" : "string",
-            "enum" : [ "fundProvider", "fund", "publication", "event", "rubric", "topic", "media", "codeList" ]
+            "enum" : [ "fundCompany", "fund", "publication", "event", "rubric", "topic", "media", "codeList" ]
           }
         }, {
           "name" : "query",
@@ -64,7 +64,7 @@
                       "type" : "array",
                       "items" : {
                         "oneOf" : [ {
-                          "$ref" : "#/components/schemas/fundProvider"
+                          "$ref" : "#/components/schemas/fundCompany"
                         }, {
                           "$ref" : "#/components/schemas/fund"
                         }, {
@@ -113,10 +113,10 @@
         }
       }
     },
-    "/entity/fundProvider" : {
+    "/entity/fundCompany" : {
       "get" : {
         "tags" : [ "Content" ],
-        "description" : "Provides read access to all Fund Companies (fundProvider). Parameters can be used to restrict result for example by changedate. Generic documentation of the api can be found above for /entity/{entity}.",
+        "description" : "Provides read access to all Fund Companies (fundCompany). Parameters can be used to restrict result for example by changedate. Generic documentation of the api can be found above for /entity/{entity}.",
         "parameters" : [ {
           "name" : "query",
           "in" : "query",
@@ -134,7 +134,7 @@
                 "schema" : {
                   "type" : "array",
                   "items" : {
-                    "$ref" : "#/components/schemas/fundProvider"
+                    "$ref" : "#/components/schemas/fundCompany"
                   }
                 }
               }
@@ -146,7 +146,7 @@
     "/entity/fund" : {
       "get" : {
         "tags" : [ "Content" ],
-        "description" : "Provides read access to all Fund Companies (fundProvider). Parameters can be used to restrict result for example by changedate. Generic documentation of the api can be found above for /entity/{entity}.",
+        "description" : "Provides read access to all Fund Companies (fundCompany). Parameters can be used to restrict result for example by changedate. Generic documentation of the api can be found above for /entity/{entity}.",
         "parameters" : [ {
           "name" : "query",
           "in" : "query",
@@ -176,7 +176,7 @@
     "/entity/publication" : {
       "get" : {
         "tags" : [ "Content" ],
-        "description" : "Provides read access to all Fund Companies (fundProvider). Parameters can be used to restrict result for example by changedate. Generic documentation of the api can be found above for /entity/{entity}.",
+        "description" : "Provides read access to all Fund Companies (FundCompany). Parameters can be used to restrict result for example by changedate. Generic documentation of the api can be found above for /entity/{entity}.",
         "parameters" : [ {
           "name" : "query",
           "in" : "query",
@@ -206,7 +206,7 @@
     "/entity/event" : {
       "get" : {
         "tags" : [ "Content" ],
-        "description" : "Provides read access to all Fund Companies (fundProvider). Parameters can be used to restrict result for example by changedate. Generic documentation of the api can be found above for /entity/{entity}.",
+        "description" : "Provides read access to all Fund Companies (fundCompany). Parameters can be used to restrict result for example by changedate. Generic documentation of the api can be found above for /entity/{entity}.",
         "parameters" : [ {
           "name" : "query",
           "in" : "query",
@@ -236,7 +236,7 @@
     "/entity/rubric" : {
       "get" : {
         "tags" : [ "Categories" ],
-        "description" : "Provides read access to all Fund Companies (fundProvider). Parameters can be used to restrict result for example by changedate. Generic documentation of the api can be found above for /entity/{entity}.",
+        "description" : "Provides read access to all Fund Companies (fundCompany). Parameters can be used to restrict result for example by changedate. Generic documentation of the api can be found above for /entity/{entity}.",
         "parameters" : [ {
           "name" : "query",
           "in" : "query",
@@ -266,7 +266,7 @@
     "/entity/topic" : {
       "get" : {
         "tags" : [ "Categories" ],
-        "description" : "Provides read access to all Fund Companies (fundProvider). Parameters can be used to restrict result for example by changedate. Generic documentation of the api can be found above for /entity/{entity}.",
+        "description" : "Provides read access to all Fund Companies (fundCompany). Parameters can be used to restrict result for example by changedate. Generic documentation of the api can be found above for /entity/{entity}.",
         "parameters" : [ {
           "name" : "query",
           "in" : "query",
@@ -329,7 +329,7 @@
     "/entity/codeList" : {
       "get" : {
         "tags" : [ "Translation for KeyValues, Feature-Labels" ],
-        "description" : "Provides read access to all Fund Companies (fundProvider). Parameters can be used to restrict result for example by changedate. Generic documentation of the api can be found above for /entity/{entity}.",
+        "description" : "Provides read access to all Fund Companies (fundCompany). Parameters can be used to restrict result for example by changedate. Generic documentation of the api can be found above for /entity/{entity}.",
         "parameters" : [ {
           "name" : "query",
           "in" : "query",
@@ -359,7 +359,7 @@
   },
   "components" : {
     "schemas" : {
-      "fundProvider" : {
+      "fundCompany" : {
         "description" : "A fund provider reflects a piece of content in censhare represented by a company asset. A contnet unit consist one one hand of the content itself like text in different languages and images. On the other hand metadata related to the content unit is maintained in censhare. The content unit summary provides mainly metadata and linkt to get the content itself.",
         "type" : "object",
         "properties" : {
