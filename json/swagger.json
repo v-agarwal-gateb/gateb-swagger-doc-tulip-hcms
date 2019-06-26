@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "title" : "HCMS REST-API for Tulip/Content Hub - New Vaibhav",
-    "description" : "This is the contract of entities of the Headless CMS (HCMS) REST-API which is used to retrieve content and related metadata for TULIP/Content Hub",
+    "description" : "This is the contract of entities of the Headless CMS (HCMS) REST-API which is used to retrieve content and related metadata for TULIP/Content Hub GateB",
     "version" : "1.0.0"
   },
   "servers" : [ {
