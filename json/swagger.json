@@ -6,7 +6,7 @@
     "version" : "1.0.0"
   },
   "servers" : [ {
-    "description" : "SwaggerHub API Auto Mocking Change",
+    "description" : "SwaggerHub API Auto Mocking",
     "url" : "https://virtserver.swaggerhub.com/gateB-India/Tulip/1.0.0"
   }, {
     "url" : "http://hcms-api.juliusbaer.com/hcms/v1.5"
