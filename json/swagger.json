@@ -1,5 +1,5 @@
 {
-  "openapi" : "4.0.1",
+  "openapi" : "5.0.1",
   "info" : {
     "title" : "ECM HCMS-deepak",
     "description" : "API to get the Info from BJB HCMS",
