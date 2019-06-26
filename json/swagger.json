@@ -495,17 +495,12 @@
                   "id" : {
                     "type" : "integer"
                   },
-                  "images" : {
-                    "type" : "array",
-                    "items" : {
-                      "$ref" : "#/components/schemas/media"
-                    }
-                  },
                   "content" : {
-                    "description" : "[Tulip002] Subtitle",
+                    "description" : "[Tulip002] <subtitle> [Tulip003] Other content ",
                     "type" : "string"
                   },
                   "version" : {
+                    "description" : "???",
                     "type" : "integer"
                   }
                 }
@@ -556,7 +551,17 @@
         }
       },
       "event" : {
-        "description" : "blubb blubb"
+        "description" : "Events for a Fund Company",
+        "properties" : {
+          "name" : {
+            "description" : "Name of the Event",
+            "type" : "string"
+          },
+          "date" : {
+            "description" : "Date of the Event",
+            "type" : "string"
+          }
+        }
       },
       "publication" : {
         "description" : "bla bla"
