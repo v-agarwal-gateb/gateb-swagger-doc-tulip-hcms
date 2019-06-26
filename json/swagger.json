@@ -1,30 +1,129 @@
 {
-  "openapi" : "5.0.1",
+  "openapi" : "3.0.0",
   "info" : {
-    "title" : "ECM HCMS-deepak",
-    "description" : "API to get the Info from BJB HCMS",
-    "version" : "0.1"
+    "title" : "HCMS REST-API for Tulip/Content Hub - New",
+    "description" : "This is the contract of entities of the Headless CMS (HCMS) REST-API which is used to retrieve content and related metadata for TULIP/Content Hub",
+    "version" : "1.0.0"
   },
   "servers" : [ {
-    "url" : "http://3.122.242.96:8080"
+    "description" : "SwaggerHub API Auto Mocking",
+    "url" : "https://virtserver.swaggerhub.com/gateB-India/Tulip/1.0.0"
   }, {
-    "url" : "http://bjb.hcms.com"
+    "url" : "http://hcms-api.juliusbaer.com/hcms/v1.5"
+  }, {
+    "url" : "http://3.122.242.96:8080/hcms/v1.5"
   } ],
   "paths" : {
-    "/hcms/v1.5/entity/contentUnitArticle" : {
+    "/entity/{entity}" : {
       "get" : {
-        "tags" : [ "Content Unit Article" ],
-        "description" : "Content Unit Article Information",
+        "tags" : [ "generic hcms api" ],
+        "description" : "Provides read access to all entities. Parameters can be used to restrict result",
+        "parameters" : [ {
+          "name" : "entity",
+          "in" : "path",
+          "description" : "Name of the entity from which content should be retreived. For the demo purpose the following entities are exposed: tulipArticle, fundCompany, fund",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "fundProvider", "fund", "publication", "event", "rubric", "topic", "media", "codeList" ]
+          }
+        }, {
+          "name" : "query",
+          "in" : "query",
+          "description" : "The query language allows specifying conditions using a dot separated path of JSON property names. This specifies the schema type to a filter optionally followed by of one of the comparison operators = , != , < , <= , >= , < , =^ and a JSON encoded value. =^ represents the prefix operator which can only be applied on string values. address.city=\"New York\" If the comparison operator and the value are missing the condition tests for the existence of a value (not null). adress.city The conditions can be combined using boolean logic with the operators in order of precedence ! , & , and | . address.city=\"New York\" & address.street=\"Broadway\" The precedence can also be modified by grouping the expressions using parenthesis ( , ) . address.city=\"New York\" & (address.street=\"Broadway\" | address.street=\"Park Avenue\").",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "limit",
+          "description" : "defines a maximum number of the returned items. When missing, the default value from the configuration is used; if there is no such value configured, the default is 100. A negative or a zero value means unlimited; this is not recommended because this can cause a potentially huge result size",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "offset",
+          "description" : "defines how many items since the beginning of the list is be skipped. When missing, 0 is used (i.e. no offset, listing starts at the very beginning). Negative values are silently ignored (and treated as 0). It is allowed for the offset to be higher than the total number of items (the result list is empty in this case). It is possible to have a positive offset with a negative (disabled) limit.",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation returns a set of object selected in the query",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "result" : {
+                      "type" : "array",
+                      "items" : {
+                        "oneOf" : [ {
+                          "$ref" : "#/components/schemas/fundProvider"
+                        }, {
+                          "$ref" : "#/components/schemas/fund"
+                        }, {
+                          "$ref" : "#/components/schemas/event"
+                        }, {
+                          "$ref" : "#/components/schemas/publication"
+                        }, {
+                          "$ref" : "#/components/schemas/rubric"
+                        }, {
+                          "$ref" : "#/components/schemas/topic"
+                        }, {
+                          "$ref" : "#/components/schemas/media"
+                        }, {
+                          "$ref" : "#/components/schemas/codeList"
+                        } ]
+                      }
+                    },
+                    "offset" : {
+                      "description" : "offset used (0 when the offset parameter is missing or negative)",
+                      "type" : "integer"
+                    },
+                    "limit" : {
+                      "description" : "maximum number of items in the result",
+                      "type" : "integer"
+                    },
+                    "count" : {
+                      "description" : "the number of items in the result",
+                      "type" : "integer"
+                    },
+                    "total-count" : {
+                      "description" : "the total number of results (un-paged)",
+                      "type" : "integer"
+                    }
+                  },
+                  "required" : [ "result" ]
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request"
+          },
+          "403" : {
+            "description" : "Access forbidden"
+          }
+        }
+      }
+    },
+    "/entity/fundProvider" : {
+      "get" : {
+        "tags" : [ "Content" ],
+        "description" : "Provides read access to all Fund Companies (fundProvider). Parameters can be used to restrict result for example by changedate. Generic documentation of the api can be found above for /entity/{entity}.",
         "parameters" : [ {
           "name" : "query",
           "in" : "query",
-          "description" : "content Unit ID of Content Unit Article. eg. cuid=975551",
-          "required" : true,
-          "style" : "form",
-          "explode" : true,
+          "description" : "",
+          "required" : false,
           "schema" : {
-            "type" : "string",
-            "format" : "string"
+            "type" : "string"
           }
         } ],
         "responses" : {
@@ -35,38 +134,116 @@
                 "schema" : {
                   "type" : "array",
                   "items" : {
-                    "$ref" : "#/components/schemas/ContentUnitArticle"
+                    "$ref" : "#/components/schemas/fundProvider"
                   }
                 }
               }
             }
-          },
-          "400" : {
-            "description" : "Bad request"
           }
-        },
-        "servers" : [ {
-          "url" : "http://3.122.242.96:8080"
-        } ]
-      },
-      "servers" : [ {
-        "url" : "http://3.122.242.96:8080"
-      } ]
+        }
+      }
     },
-    "/hcms/v1.5/entity/contentUnitText" : {
+    "/entity/fund" : {
       "get" : {
-        "tags" : [ "Content Unit Text" ],
-        "description" : "Content Unit Article Information",
+        "tags" : [ "Content" ],
+        "description" : "Provides read access to all Fund Companies (fundProvider). Parameters can be used to restrict result for example by changedate. Generic documentation of the api can be found above for /entity/{entity}.",
         "parameters" : [ {
           "name" : "query",
           "in" : "query",
-          "description" : "content Unit ID of Content Unit Article. eg. parent.cuid=\"975551\"&lang=\"de\"",
-          "required" : true,
-          "style" : "form",
-          "explode" : true,
+          "description" : "",
+          "required" : false,
           "schema" : {
-            "type" : "string",
-            "format" : "string"
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation returns a set of content unit summary objects",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/fund"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/entity/publication" : {
+      "get" : {
+        "tags" : [ "Content" ],
+        "description" : "Provides read access to all Fund Companies (fundProvider). Parameters can be used to restrict result for example by changedate. Generic documentation of the api can be found above for /entity/{entity}.",
+        "parameters" : [ {
+          "name" : "query",
+          "in" : "query",
+          "description" : "",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation returns a set of content unit summary objects",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/publication"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/entity/event" : {
+      "get" : {
+        "tags" : [ "Content" ],
+        "description" : "Provides read access to all Fund Companies (fundProvider). Parameters can be used to restrict result for example by changedate. Generic documentation of the api can be found above for /entity/{entity}.",
+        "parameters" : [ {
+          "name" : "query",
+          "in" : "query",
+          "description" : "",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation returns a set of content unit summary objects",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/event"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/entity/rubric" : {
+      "get" : {
+        "tags" : [ "Categories" ],
+        "description" : "Provides read access to all Fund Companies (fundProvider). Parameters can be used to restrict result for example by changedate. Generic documentation of the api can be found above for /entity/{entity}.",
+        "parameters" : [ {
+          "name" : "query",
+          "in" : "query",
+          "description" : "",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
           }
         } ],
         "responses" : {
@@ -77,104 +254,53 @@
                 "schema" : {
                   "type" : "array",
                   "items" : {
-                    "$ref" : "#/components/schemas/ContentUnitText"
+                    "$ref" : "#/components/schemas/rubric"
                   }
                 }
               }
             }
-          },
-          "400" : {
-            "description" : "Bad request"
           }
-        },
-        "servers" : [ {
-          "url" : "http://3.122.242.96:8080"
-        } ]
-      },
-      "servers" : [ {
-        "url" : "http://3.122.242.96:8080"
-      } ]
+        }
+      }
     },
-    "/hcms/v1.5/entity/contentUnitText/{id}" : {
+    "/entity/topic" : {
       "get" : {
-        "tags" : [ "Content Unit Text by ID" ],
-        "description" : "Content Unit Article Information",
+        "tags" : [ "Categories" ],
+        "description" : "Provides read access to all Fund Companies (fundProvider). Parameters can be used to restrict result for example by changedate. Generic documentation of the api can be found above for /entity/{entity}.",
         "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "a unique ID can be given as a parameter to get the content unit with ID",
-          "required" : true,
-          "style" : "simple",
-          "explode" : false,
+          "name" : "query",
+          "in" : "query",
+          "description" : "",
+          "required" : false,
           "schema" : {
-            "type" : "string",
-            "format" : "string"
+            "type" : "string"
           }
         } ],
         "responses" : {
           "200" : {
-            "description" : "Successful operation returns a set of content unit summary objects",
+            "description" : "successful operation returns a set of content unit summary objects",
             "content" : {
               "application/json" : {
                 "schema" : {
                   "type" : "array",
                   "items" : {
-                    "$ref" : "#/components/schemas/ContentUnitText"
+                    "$ref" : "#/components/schemas/rubric"
                   }
                 }
               }
             }
-          },
-          "400" : {
-            "description" : "Bad request"
           }
-        },
-        "servers" : [ {
-          "url" : "http://3.122.242.96:8080"
-        } ]
-      },
-      "servers" : [ {
-        "url" : "http://3.122.242.96:8080"
-      } ]
+        }
+      }
     },
-    "/hcms/v1.5/entity/image" : {
+    "/entity/media/{id}" : {
       "get" : {
-        "tags" : [ "Image list" ],
-        "description" : "List of all the Image used",
-        "responses" : {
-          "200" : {
-            "description" : "Successful operation returns a set of content unit summary objects",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/Image"
-                  }
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Bad request"
-          }
-        },
-        "servers" : [ {
-          "url" : "http://3.122.242.96:8080"
-        } ]
-      },
-      "servers" : [ {
-        "url" : "http://3.122.242.96:8080"
-      } ]
-    },
-    "/hcms/v1.5/entity/image/{id}" : {
-      "get" : {
-        "tags" : [ "Image by ID" ],
-        "description" : "Information for a single Image",
+        "tags" : [ "Images, Downloads, Files" ],
+        "description" : "Information for a single Media",
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
-          "description" : "Image ID",
+          "description" : "Media ID",
           "required" : true,
           "style" : "simple",
           "explode" : false,
@@ -191,191 +317,176 @@
                 "schema" : {
                   "type" : "array",
                   "items" : {
-                    "$ref" : "#/components/schemas/Image"
+                    "$ref" : "#/components/schemas/media"
                   }
                 }
               }
             }
-          },
-          "400" : {
-            "description" : "Bad request"
           }
-        },
-        "servers" : [ {
-          "url" : "http://3.122.242.96:8080"
-        } ]
-      },
-      "servers" : [ {
-        "url" : "http://3.122.242.96:8080"
-      } ]
+        }
+      }
     },
-    "/hcms/v1.0/entity/contentUnitArticle/{id}/media/{hash}/{variant}" : {
+    "/entity/codeList" : {
       "get" : {
-        "tags" : [ "Image vaiant by storage key" ],
-        "description" : "Image vaiant by storage key",
+        "tags" : [ "Translation for KeyValues, Feature-Labels" ],
+        "description" : "Provides read access to all Fund Companies (fundProvider). Parameters can be used to restrict result for example by changedate. Generic documentation of the api can be found above for /entity/{entity}.",
         "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Article ID",
-          "required" : true,
-          "style" : "simple",
-          "explode" : false,
+          "name" : "query",
+          "in" : "query",
+          "description" : "",
+          "required" : false,
           "schema" : {
-            "type" : "integer",
-            "format" : "int64"
-          }
-        }, {
-          "name" : "hash",
-          "in" : "path",
-          "description" : "Image variant hash which comes in image url",
-          "required" : true,
-          "style" : "simple",
-          "explode" : false,
-          "schema" : {
-            "type" : "string",
-            "format" : "string"
-          }
-        }, {
-          "name" : "variant",
-          "in" : "path",
-          "description" : "Image storage key name",
-          "required" : true,
-          "style" : "simple",
-          "explode" : false,
-          "schema" : {
-            "type" : "string",
-            "format" : "string"
+            "type" : "string"
           }
         } ],
         "responses" : {
           "200" : {
-            "description" : "Successful operation returns a set of content unit summary objects",
+            "description" : "successful operation returns a set of content unit summary objects",
             "content" : {
-              "image/*" : {
+              "application/json" : {
                 "schema" : {
-                  "type" : "string",
-                  "format" : "binary"
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/codeList"
+                  }
                 }
               }
             }
-          },
-          "400" : {
-            "description" : "Bad request"
           }
-        },
-        "servers" : [ {
-          "url" : "http://3.122.242.96:8080"
-        } ]
-      },
-      "servers" : [ {
-        "url" : "http://3.122.242.96:8080"
-      } ]
+        }
+      }
     }
   },
   "components" : {
     "schemas" : {
-      "ContentUnitArticle" : {
+      "fundProvider" : {
+        "description" : "A fund provider reflects a piece of content in censhare represented by a company asset. A contnet unit consist one one hand of the content itself like text in different languages and images. On the other hand metadata related to the content unit is maintained in censhare. The content unit summary provides mainly metadata and linkt to get the content itself.",
         "type" : "object",
         "properties" : {
-          "contentLevel" : {
-            "type" : "string",
-            "description" : "The level of content. Values can be 1,2,3"
+          "cuid" : {
+            "description" : "The unique identifier of the content unit as a string.",
+            "type" : "string"
+          },
+          "assetId" : {
+            "description" : "The CMS internal identifier of the asset holding the generated content of the content unit.",
+            "type" : "integer"
           },
           "creationDate" : {
+            "description" : "date/time of the Fund Company Asset creation, in ISO 8601 UTC encoding. Examples: 2019-03-25T11:57:32.123Z, 2019-03-25T11:57:32Z",
             "type" : "string",
-            "description" : "Date of creation."
-          },
-          "cuid" : {
-            "description" : "Array of CUID of Article",
-            "type" : "array",
-            "items" : {
-              "type" : "string"
-            }
-          },
-          "id" : {
-            "type" : "integer",
-            "description" : "Article ID"
-          },
-          "keyVisual" : {
-            "type" : "array",
-            "description" : "Keyvisual Items",
-            "items" : {
-              "$ref" : "#/components/schemas/Image"
-            }
-          },
-          "keywords" : {
-            "type" : "string",
-            "description" : "Keywords seperated by comas"
+            "format" : "date-time"
           },
           "modifiedDate" : {
+            "description" : "date/time of the Fund Company Asset was last modified, in ISO 8601 UTC encoding. Examples: 2019-03-25T11:57:32.123Z, 2019-03-25T11:57:32Z",
             "type" : "string",
-            "description" : "Modification Date - yyyy-MM-ddThh:mm:ssZ"
+            "format" : "date-time"
+          },
+          "publicationDate" : {
+            "description" : "date/time of the Fund Company Asset was last modified, in ISO 8601 UTC encoding. Examples: 2019-03-25T11:57:32.123Z, 2019-03-25T11:57:32Z",
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "publicationState" : {
+            "description" : "Writer can mark Assets either as deleted or archived. These  will still be available through HCMS and marked with publicatation State archived respectively deleted. All content available for the client is in state published.",
+            "type" : "string",
+            "format" : "enum[published, archived, deleted]"
+          },
+          "version" : {
+            "description" : "The version of the Fund Company Asset. The version is increased for any change of the Fund Company Asset that is published.",
+            "type" : "integer"
           },
           "name" : {
-            "type" : "string",
-            "description" : "Name of Article Asset"
+            "description" : "The internal name of the Fund Company Asset.",
+            "type" : "string"
           },
-          "publicationType" : {
-            "type" : "string",
-            "description" : "Publication Type - like Investment view, Market Opportunity"
+          "language" : {
+            "description" : "The master language in ISO 639-1 (en)",
+            "type" : "string"
           },
-          "subPublicationType" : {
+          "additionalLanguages" : {
+            "description" : "Additional language the Company is translated. ISO 639-1",
             "type" : "string",
-            "description" : "Sub-Publication Type - like speacial, standard"
+            "format" : "enum[de,it,fr,es]"
           },
-          "successor" : {
-            "type" : "array",
-            "items" : {
-              "type" : "object",
-              "properties" : {
-                "key" : {
-                  "type" : "string"
-                },
-                "value" : {
-                  "type" : "array",
-                  "items" : {
+          "validFrom" : {
+            "description" : "date/time when the Company validity period starts, in ISO 8601 UTC encoding. Examples: 2019-03-25T11:57:32.123Z, 2019-03-25T11:57:32Z",
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "validTo" : {
+            "description" : "date/time when the Company validity period ends, in ISO 8601 UTC encoding. Examples: 2019-03-25T11:57:32.123Z, 2019-03-25T11:57:32Z",
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "keywords" : {
+            "description" : "A free text containing alist of keywords used to describe the content unit seperated by comma.",
+            "type" : "string"
+          },
+          "companyLogo" : {
+            "type" : "object",
+            "properties" : {
+              "assetId" : {
+                "type" : "string"
+              },
+              "url" : {
+                "$ref" : "#/components/schemas/media"
+              }
+            }
+          },
+          "companyLink" : {
+            "type" : "object",
+            "properties" : {
+              "<language>" : {
+                "type" : "string"
+              }
+            }
+          },
+          "keyFacts" : {
+            "type" : "object",
+            "properties" : {
+              "<sortingNo>" : {
+                "type" : "object",
+                "properties" : {
+                  "language" : {
                     "type" : "string",
-                    "description" : "Value of Feature - bjb:ecm.successorValue"
-                  }
-                }
-              }
-            }
-          },
-          "successorChilds" : {
-            "type" : "array",
-            "items" : {
-              "type" : "object",
-              "properties" : {
-                "id" : {
-                  "type" : "integer"
-                },
-                "cuid" : {
-                  "type" : "array",
-                  "items" : {
+                    "format" : "enum[en,de,it,fr]"
+                  },
+                  "label" : {
+                    "type" : "string"
+                  },
+                  "value" : {
                     "type" : "string"
                   }
                 }
               }
             }
           },
-          "successorParent" : {
-            "type" : "array",
-            "items" : {
-              "type" : "object",
-              "properties" : {
-                "id" : {
-                  "type" : "integer"
-                },
-                "cuid" : {
-                  "type" : "array",
-                  "items" : {
+          "funds" : {
+            "type" : "object",
+            "properties" : {
+              "<MorningstarID>" : {
+                "type" : "object",
+                "properties" : {
+                  "assetId" : {
                     "type" : "string"
+                  },
+                  "url" : {
+                    "$ref" : "#/components/schemas/fund"
                   }
                 }
+              }
+            }
+          },
+          "events" : {
+            "type" : "object",
+            "properties" : {
+              "<assetID>" : {
+                "$ref" : "#/components/schemas/event"
               }
             }
           },
           "text" : {
+            "description" : "List of the urls to load text of the Company in different languages.",
             "type" : "object",
             "properties" : {
               "<language>" : {
@@ -387,7 +498,7 @@
                   "images" : {
                     "type" : "array",
                     "items" : {
-                      "$ref" : "#/components/schemas/Image"
+                      "$ref" : "#/components/schemas/media"
                     }
                   },
                   "url" : {
@@ -399,84 +510,67 @@
                 }
               }
             }
-          },
-          "version" : {
-            "type" : "integer"
           }
-        }
+        },
+        "required" : [ "publicationDate", "name", "companyLogo", "keyFacts", "text", "link" ]
       },
-      "ContentUnitText" : {
+      "fund" : {
+        "description" : "fundi fundi",
         "type" : "object",
         "properties" : {
-          "contentLevel" : {
-            "type" : "string",
-            "description" : "The level of content. Values can be 1,2,3"
+          "name" : {
+            "type" : "string"
           },
-          "creationDate" : {
-            "type" : "string",
-            "description" : "Date of creation - yyyy-MM-ddThh:mm:ssZ."
+          "image" : {
+            "type" : "string"
           },
-          "id" : {
-            "type" : "integer",
-            "description" : "Text asset ID"
+          "shortCaption" : {
+            "type" : "string"
           },
-          "images" : {
+          "longCaption" : {
+            "type" : "string"
+          },
+          "language" : {
+            "description" : "language based on ISO 639-1",
+            "type" : "string"
+          },
+          "classification" : {
             "type" : "array",
             "items" : {
-              "$ref" : "#/components/schemas/Image"
-            }
-          },
-          "lang" : {
-            "type" : "string",
-            "description" : "Keywords"
-          },
-          "modifiedDate" : {
-            "type" : "string",
-            "description" : "Modification Date - yyyy-MM-ddThh:mm:ssZ"
-          },
-          "name" : {
-            "type" : "string",
-            "description" : "Name of text Asset"
-          },
-          "parent" : {
-            "type" : "object",
-            "properties" : {
-              "id" : {
-                "type" : "integer"
-              },
-              "cuid" : {
-                "type" : "array",
-                "items" : {
+              "type" : "object",
+              "properties" : {
+                "classificationKey" : {
                   "type" : "string"
+                },
+                "classificationValue" : {
+                  "type" : "string"
+                },
+                "language" : {
+                  "type" : "string",
+                  "description" : "--> Assumption classifiction key and values are not translated. Therefore no language attribute is required"
                 }
               }
             }
-          },
-          "url" : {
-            "type" : "string",
-            "description" : "Link of content of text asset"
-          },
-          "version" : {
-            "type" : "integer"
           }
         }
       },
-      "Image" : {
-        "type" : "object",
-        "properties" : {
-          "name" : {
-            "type" : "string",
-            "description" : "Name of the image"
-          },
-          "id" : {
-            "type" : "string",
-            "description" : "ID of Image Asset."
-          },
-          "variants" : {
-            "type" : "string",
-            "description" : "Link of the variants endpoints. Different variants can be accessible by suffixing the keys preview, master, thumnail,16x9,3x4"
-          }
-        }
+      "event" : {
+        "description" : "blubb blubb"
+      },
+      "publication" : {
+        "description" : "bla bla"
+      },
+      "rubric" : {
+        "description" : "bla bla"
+      },
+      "topic" : {
+        "description" : "bla bla"
+      },
+      "media" : {
+        "description" : "mediaAsset"
+      },
+      "codeList" : {
+        "description" : "Code List Description"
       }
     }
   }
