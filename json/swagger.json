@@ -360,7 +360,7 @@
   "components" : {
     "schemas" : {
       "fundCompany" : {
-        "description" : "A fund provider reflects a piece of content in censhare represented by a company asset. A contnet unit consist one one hand of the content itself like text in different languages and images. On the other hand metadata related to the content unit is maintained in censhare. The content unit summary provides mainly metadata and linkt to get the content itself.",
+        "description" : "A fund provider reflects a piece of content in censhare represented by a company asset. A contnet unit consist one one hand of the content itself like text in different languages and images. On the other hand metadata related to the content unit is maintained in censhare. The content unit summary provides mainly metadata and linkt to get the content itself. Example asset id: #1229559",
         "type" : "object",
         "properties" : {
           "cuid" : {
@@ -396,7 +396,7 @@
             "type" : "integer"
           },
           "name" : {
-            "description" : "[Tulip]The internal name of the Fund Company Asset.",
+            "description" : "[Tulip001] The internal name of the Fund Company Asset.",
             "type" : "string"
           },
           "language" : {
@@ -501,7 +501,8 @@
                       "$ref" : "#/components/schemas/media"
                     }
                   },
-                  "url" : {
+                  "content" : {
+                    "description" : "[Tulip002] Subtitle",
                     "type" : "string"
                   },
                   "version" : {
