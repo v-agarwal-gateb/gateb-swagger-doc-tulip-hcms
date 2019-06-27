@@ -1,7 +1,7 @@
 {
   "openapi" : "3.0.0",
   "info" : {
-    "title" : "HCMS REST-API for Tulip/Content Hub - New Gateb - Start Date -26th June...",
+    "title" : "HCMS REST-API for Tulip/Content Hub .",
     "description" : "This is the contract of entities of the Headless CMS (HCMS) REST-API which is used to retrieve content and related metadata for TULIP/Content Hub GateB",
     "version" : "1.0.0"
   },
@@ -364,10 +364,10 @@
         "type" : "object",
         "properties" : {
           "cuid" : {
-            "description" : "The unique identifier of the content unit as a string.",
-            "type" : "string"
+            "description" : "Unique Content ID to identify the content",
+            "type" : "integer"
           },
-          "assetId" : {
+          "id" : {
             "description" : "The CMS internal identifier of the asset holding the generated content of the content unit.",
             "type" : "integer"
           },
@@ -399,15 +399,6 @@
             "description" : "[Tulip001] The internal name of the Fund Company Asset.",
             "type" : "string"
           },
-          "language" : {
-            "description" : "The master language in ISO 639-1 (en)",
-            "type" : "string"
-          },
-          "additionalLanguages" : {
-            "description" : "Additional language the Company is translated. ISO 639-1",
-            "type" : "string",
-            "format" : "enum[de,it,fr,es]"
-          },
           "validFrom" : {
             "description" : "date/time when the Company validity period starts, in ISO 8601 UTC encoding. Examples: 2019-03-25T11:57:32.123Z, 2019-03-25T11:57:32Z",
             "type" : "string",
@@ -418,11 +409,8 @@
             "type" : "string",
             "format" : "date-time"
           },
-          "keywords" : {
-            "description" : "A free text containing alist of keywords used to describe the content unit seperated by comma.",
-            "type" : "string"
-          },
           "companyLogo" : {
+            "description" : "Company Logo.",
             "type" : "object",
             "properties" : {
               "assetId" : {
@@ -434,6 +422,7 @@
             }
           },
           "companyLink" : {
+            "description" : "Company Link.",
             "type" : "object",
             "properties" : {
               "<language>" : {
@@ -442,6 +431,7 @@
             }
           },
           "keyFacts" : {
+            "description" : "Key facts of a Fund Company. It will come from Metadata???",
             "type" : "object",
             "properties" : {
               "<sortingNo>" : {
@@ -462,18 +452,11 @@
             }
           },
           "funds" : {
+            "description" : "Funds of a Fund Company",
             "type" : "object",
             "properties" : {
-              "<MorningstarID>" : {
-                "type" : "object",
-                "properties" : {
-                  "assetId" : {
-                    "type" : "string"
-                  },
-                  "url" : {
-                    "$ref" : "#/components/schemas/fund"
-                  }
-                }
+              "<fundID>" : {
+                "$ref" : "#/components/schemas/fund"
               }
             }
           },
@@ -495,8 +478,8 @@
                   "id" : {
                     "type" : "integer"
                   },
-                  "content" : {
-                    "description" : "[Tulip002] <subtitle> [Tulip003] Other content ",
+                  "url" : {
+                    "description" : "URL of content",
                     "type" : "string"
                   },
                   "version" : {
@@ -560,6 +543,40 @@
           "date" : {
             "description" : "Date of the Event",
             "type" : "string"
+          },
+          "unit" : {
+            "description" : "Unit of the Event. where will user enter it? we can have an asset for this???",
+            "type" : "string"
+          },
+          "contact" : {
+            "description" : "Contact Person of an even. PERSON ASSET??",
+            "type" : "string"
+          },
+          "booking" : {
+            "description" : "Booking???",
+            "type" : "string"
+          },
+          "information" : {
+            "description" : "More Information about",
+            "type" : "object",
+            "properties" : {
+              "<language>" : {
+                "type" : "object",
+                "properties" : {
+                  "id" : {
+                    "type" : "integer"
+                  },
+                  "content" : {
+                    "description" : "Even Asset Text",
+                    "type" : "string"
+                  },
+                  "version" : {
+                    "description" : "???",
+                    "type" : "integer"
+                  }
+                }
+              }
+            }
           }
         }
       },
