@@ -367,12 +367,7 @@
         "properties" : {
           "companyLink" : {
             "description" : "Company Link.",
-            "properties" : {
-              "<language>" : {
-                "type" : "string"
-              }
-            },
-            "type" : "object"
+            "type" : "string"
           },
           "companyLogo" : {
             "description" : "Company Logo.",
@@ -394,6 +389,14 @@
           "cuid" : {
             "description" : "Unique Content ID to identify the content",
             "type" : "integer"
+          },
+          "events" : {
+            "properties" : {
+              "<assetID>" : {
+                "$ref" : "#/components/schemas/event"
+              }
+            },
+            "type" : "object"
           },
           "fundCompanyArticle" : {
             "description" : "List of the urls to load text of the Company in different languages.",
@@ -422,14 +425,6 @@
                   }
                 },
                 "type" : "object"
-              }
-            },
-            "type" : "object"
-          },
-          "events" : {
-            "properties" : {
-              "<assetID>" : {
-                "$ref" : "#/components/schemas/event"
               }
             },
             "type" : "object"
@@ -475,7 +470,11 @@
           },
           "name" : {
             "description" : "[Tulip001] The internal name of the Fund Company Asset.",
-            "type" : "string"
+            "properties" : {
+              "<language>" : {
+                "type" : "string"
+              }
+            }
           },
           "publicationDate" : {
             "description" : "date/time of the Fund Company Asset was last modified, in ISO 8601 UTC encoding. Examples: 2019-03-25T11:57:32.123Z, 2019-03-25T11:57:32Z",
