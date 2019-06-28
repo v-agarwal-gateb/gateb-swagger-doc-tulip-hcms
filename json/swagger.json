@@ -395,6 +395,37 @@
             "description" : "Unique Content ID to identify the content",
             "type" : "integer"
           },
+          "fundCompanyArticle" : {
+            "description" : "List of the urls to load text of the Company in different languages.",
+            "properties" : {
+              "id" : {
+                "type" : "integer"
+              },
+              "name" : {
+                "type" : "string"
+              },
+              "<text>" : {
+                "properties" : {
+                  "id" : {
+                    "type" : "integer"
+                  },
+                  "name" : {
+                    "type" : "string"
+                  },
+                  "url" : {
+                    "description" : "URL of content",
+                    "type" : "string"
+                  },
+                  "version" : {
+                    "description" : "???",
+                    "type" : "integer"
+                  }
+                },
+                "type" : "object"
+              }
+            },
+            "type" : "object"
+          },
           "events" : {
             "properties" : {
               "<assetID>" : {
@@ -455,28 +486,6 @@
             "description" : "Writer can mark Assets either as deleted or archived. These  will still be available through HCMS and marked with publicatation State archived respectively deleted. All content available for the client is in state published.",
             "format" : "enum[published, archived, deleted]",
             "type" : "string"
-          },
-          "text" : {
-            "description" : "List of the urls to load text of the Company in different languages.",
-            "properties" : {
-              "<language>" : {
-                "properties" : {
-                  "id" : {
-                    "type" : "integer"
-                  },
-                  "url" : {
-                    "description" : "URL of content",
-                    "type" : "string"
-                  },
-                  "version" : {
-                    "description" : "???",
-                    "type" : "integer"
-                  }
-                },
-                "type" : "object"
-              }
-            },
-            "type" : "object"
           },
           "validFrom" : {
             "description" : "date/time when the Company validity period starts, in ISO 8601 UTC encoding. Examples: 2019-03-25T11:57:32.123Z, 2019-03-25T11:57:32Z",
