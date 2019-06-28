@@ -364,7 +364,6 @@
     "schemas" : {
       "fundCompany" : {
         "description" : "A fund provider reflects a piece of content in censhare represented by a company asset. A contnet unit consist one one hand of the content itself like text in different languages and images. On the other hand metadata related to the content unit is maintained in censhare. The content unit summary provides mainly metadata and linkt to get the content itself. Example asset id: #1229559",
-        "type" : "object",
         "properties" : {
           "companyLink" : {
             "description" : "Company Link.",
@@ -395,6 +394,23 @@
           "cuid" : {
             "description" : "Unique Content ID to identify the content",
             "type" : "integer"
+          },
+          "events" : {
+            "properties" : {
+              "<assetID>" : {
+                "$ref" : "#/components/schemas/event"
+              }
+            },
+            "type" : "object"
+          },
+          "funds" : {
+            "description" : "Funds of a Fund Company",
+            "properties" : {
+              "<fundID>" : {
+                "$ref" : "#/components/schemas/fund"
+              }
+            },
+            "type" : "object"
           },
           "id" : {
             "description" : "The CMS internal identifier of the asset holding the generated content of the content unit.",
@@ -440,6 +456,28 @@
             "format" : "enum[published, archived, deleted]",
             "type" : "string"
           },
+          "text" : {
+            "description" : "List of the urls to load text of the Company in different languages.",
+            "properties" : {
+              "<language>" : {
+                "properties" : {
+                  "id" : {
+                    "type" : "integer"
+                  },
+                  "url" : {
+                    "description" : "URL of content",
+                    "type" : "string"
+                  },
+                  "version" : {
+                    "description" : "???",
+                    "type" : "integer"
+                  }
+                },
+                "type" : "object"
+              }
+            },
+            "type" : "object"
+          },
           "validFrom" : {
             "description" : "date/time when the Company validity period starts, in ISO 8601 UTC encoding. Examples: 2019-03-25T11:57:32.123Z, 2019-03-25T11:57:32Z",
             "format" : "date-time",
@@ -453,48 +491,9 @@
           "version" : {
             "description" : "The version of the Fund Company Asset. The version is increased for any change of the Fund Company Asset that is published.",
             "type" : "integer"
-          },
-          "funds" : {
-            "description" : "Funds of a Fund Company",
-            "type" : "object",
-            "properties" : {
-              "<fundID>" : {
-                "$ref" : "#/components/schemas/fund"
-              }
-            }
-          },
-          "events" : {
-            "type" : "object",
-            "properties" : {
-              "<assetID>" : {
-                "$ref" : "#/components/schemas/event"
-              }
-            }
-          },
-          "text" : {
-            "description" : "List of the urls to load text of the Company in different languages.",
-            "type" : "object",
-            "properties" : {
-              "<language>" : {
-                "type" : "object",
-                "properties" : {
-                  "id" : {
-                    "type" : "integer"
-                  },
-                  "url" : {
-                    "description" : "URL of content",
-                    "type" : "string"
-                  },
-                  "version" : {
-                    "description" : "???",
-                    "type" : "integer"
-                  }
-                }
-              }
-            }
           }
         },
-        "required" : [ "publicationDate", "name", "companyLogo", "keyFacts", "text", "link" ]
+        "type" : "object"
       },
       "fund" : {
         "description" : "fundi fundi",
